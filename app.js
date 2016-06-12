@@ -7,13 +7,13 @@ var bodyParser = require('body-parser');
 var helmet = require('helmet');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var flash    = require('connect-flash');
 var expressSession = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var entity = require('./routes/entity');
-var strategy = require('./config/passport');
-
+require('./config/passport')(passport); // pass passport for configuration
 var app = express();
 
 // MongoDB stuff
@@ -31,29 +31,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet())
-app.use(expressSession({secret: 'gew4geb543', resave: false,  saveUninitialized: false}));
+app.use(expressSession({secret: 'gew4geb543', resave: true,  saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.get('/callback',
-  passport.authenticate('auth0', { failureRedirect: '/login' }),
-  function(req, res) {
-    if (!req.user) {
-      throw new Error('user null');
-    }
-    res.redirect("/");
-  }
-);
-
-app.get('/login',
-  passport.authenticate('auth0', {}), function (req, res) {
-  res.redirect("/");
-});
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/e', entity);
-
+require('./routes/login')(app, passport); // load our routes and pass in our app and fully configured passport
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
