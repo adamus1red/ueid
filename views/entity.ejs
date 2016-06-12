@@ -1,0 +1,9 @@
+<% include partial/head.ejs %>
+  <body>
+    <% include partial/navbar.ejs %>
+    <p>Full EUID: <%= entity.entity.fullUEID %></p>
+    <p>Decimal ID: <%= parseInt(entity.prefix.type.hex + entity.prefix.hex + entity.entity.hex, 16) %></p>
+    <%= JSON.stringify(entity) %>
+    <% include partial/footer.ejs %>
+  </body>
+</html>

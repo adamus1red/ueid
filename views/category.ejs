@@ -1,0 +1,11 @@
+<% include partial/head.ejs %>
+  <body>
+    <% include partial/navbar.ejs %>
+    <p></p>
+    <p><% for(var i = 0; i < data.length; i++) { %>
+        <a href="/e/<%= data[i].id %>"><%= data[i].name %></a><br />
+    <% }%>
+    </p>
+    <% include partial/footer.ejs %>
+  </body>
+</html>

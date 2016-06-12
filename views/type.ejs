@@ -1,0 +1,12 @@
+<% include partial/head.ejs %>
+  <body>
+    <% include partial/navbar.ejs %>
+    <p>
+    <% for(var i=0; i<prefixi.length; i++) {%>
+        <a href="/e/<%= type %>/<%= prefixi[i] %> %>"><%= prefixi[i] %></a><br />
+    <%} %>
+    </p>
+    <%= JSON.stringify(data) %>
+    <% include partial/footer.ejs %>
+  </body>
+</html>

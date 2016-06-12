@@ -1,0 +1,13 @@
+<% include partial/head.ejs %>
+  <body>
+    <% include partial/navbar.ejs %>
+    <p>TYPE: <%= entities[0].prefix.type.hex %>
+    <p>PREFIX: <%= entities[0].prefix.hex %></p>
+    <p>
+    <% for(var i = 0; i < entities.length; i++) { %>
+        <a href="/e/<%= entities[i].prefix.type.hex %>/<%= entities[i].prefix.hex %>/<%= entities[i].entity.hex %>"><%= entities[i].entity.fullUEID%></a><br />
+    <% } %>
+    </p>
+    <% include partial/footer.ejs %>
+  </body>
+</html>
