@@ -1,6 +1,16 @@
 <% include partial/head.ejs %>
   <body>
     <% include partial/navbar.ejs %>
+    <nav id="brc-pad1" class="light-blue lighten-2">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="/e/">Categories</a>
+            <a href="/e/<%= entity.prefix.type.hex %>" class="breadcrumb"><%= entity.prefix.type.hex %></a>
+            <a href="/e/<%= entity.prefix.type.hex %>/<%= entity.prefix.hex %>" class="breadcrumb"><%= entity.prefix.hex %></a>
+            <a href="/e/<%= entity.prefix.type.hex %>/<%= entity.prefix.hex %>/<%= entity.entity.hex %>" class="breadcrumb"><%= entity.prefix.hex %></a>
+          </div>
+        </div>
+    </nav>
     <p>Full EUID: <%= entity.entity.fullUEID %></p>
     <p>Decimal ID: <%= parseInt(entity.prefix.type.hex + entity.prefix.hex + entity.entity.hex, 16) %></p>
     <%= JSON.stringify(entity) %>
