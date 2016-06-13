@@ -13,7 +13,7 @@ module.exports = function(app, passport) {
         // LOGIN ===============================
         // show the login form
         app.get('/login/', csrfProtection, function(req, res) {
-            res.render('login.ejs', { csrfToken: req.csrfToken(), title: "Login" });
+            res.render('login.ejs', { csrfToken: req.csrfToken(), title: "Login", user: req.user });
         });
 
         
@@ -27,7 +27,7 @@ module.exports = function(app, passport) {
         // SIGNUP =================================
         // show the signup form
         app.get('/login/signup', csrfProtection, function(req, res) {
-            res.render('signup.ejs', { csrfToken: req.csrfToken(), title: "Signup" });
+            res.render('signup.ejs', { csrfToken: req.csrfToken(), title: "Signup", user: req.user });
         });
 
         // process the signup form

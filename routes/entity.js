@@ -64,7 +64,7 @@ router.get('/', function(req, res, next) {
     Common.findOne({"name": "types"}, function(err, data) {
         if (err) throw err;
 
-        res.render('category', { title: 'Type Entity', data: data.data.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0);} )});
+        res.render('category', { title: 'Type Entity', data: data.data.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.last_nom > a.last_nom) ? -1 : 0);} ), user: req.user});
     });
 });
 
@@ -78,7 +78,7 @@ router.get('/:type', function(req,res,next) {
             // object of all the stuff
             console.log(prefixi);
             if(prefixi.length>0 && prefixi != null){
-                res.render('type', { title: 'Type Entity', type: req.params.type, data: data, prefixi: prefixi});
+                res.render('type', { title: 'Type Entity', type: req.params.type, data: data, prefixi: prefixi, user: req.user});
             } else {
                 res.status(404).send('Not found');;
             }
@@ -93,7 +93,7 @@ router.get('/:type/:prefix', function(req, res, next) {
         // object of all the stuff
         console.log(entities);
         if(entities.length>0 && entities != null){
-            res.render('prefix', { title: 'Prefix Entity', type: req.params.type, prefix: req.params.prefix, entities: entities });
+            res.render('prefix', { title: 'Prefix Entity', type: req.params.type, prefix: req.params.prefix, entities: entities, user: req.user });
         } else {
             res.status(404)        // HTTP status 404: NotFound
    .send('Not found');
@@ -108,7 +108,7 @@ router.get('/:type/:prefix/:eid', function(req, res, next) {
         // object of all the stuff
         console.log(entity);
         if(entity != null) {
-            res.render('entity', { title: 'Entity Info', entity: entity, type: req.params.type, prefix: req.params.prefix, eid: req.params.eid});
+            res.render('entity', { title: 'Entity Info', entity: entity, type: req.params.type, prefix: req.params.prefix, eid: req.params.eid, user: req.user});
         } else {
             res.status(404)        // HTTP status 404: NotFound
    .send('Not found');
