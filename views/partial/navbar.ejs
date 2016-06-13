@@ -1,2 +1,38 @@
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+<div class="main">
+            <div class="navbar-fixed">
+            <% if (typeof user != "undefined") {%>
+                <!-- Dropdown Structure -->
+                <ul id="userdropdown" class="dropdown-content">
+                    <li><a href="/users"><%= user.username %></a></li>
+                    <li><a href="#!">dash</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            <% } else { %>
+                <!-- Dropdown Structure -->
+                <ul id="userdropdown" class="dropdown-content">
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/login/signup">Signup</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!">three</a></li>
+                </ul>
+            <% } %>
+                <nav class="light-blue lighten-1">
+                    <div class="nav-wrapper">
+                        <a href="/" class="brand-logo center">UEID</a>
+                        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="/about">About</a></li>
+                            <li><a href="/docs">Docs</a></li>
+                            <li><a href="/blog">Blog</a></li>
+                            <li><a class="dropdown-button" href="#!" data-activates="userdropdown"><i class="material-icons">more_vert</i></a></li>
+                        </ul>
+                        <ul class="side-nav" id="mobile-demo">
+                            <li><a href="/about">About</a></li>
+                            <li><a href="/docs">Docs</a></li>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/login/signup">Sign-up</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
