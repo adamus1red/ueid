@@ -14,6 +14,7 @@ router.get('/test_create_entity', function(req,res,next) {
         },
         "prefix": {
             "decimal": 1,
+            "owner" :  ObjectID("575de2ce690540882cfc0018"),
             "hex": "000001",
             "name": "Test Prefix",
             "description": "Prefix to be used for the development and testing of UEID systems",
@@ -72,7 +73,7 @@ router.get('/:type', function(req,res,next) {
     console.log(req.params.type);
     Common.findOne({"name": "types"}, function(err, data) {
         if (err) throw err;
-        Entity.find({'prefix.type.hex':req.params.type}).distinct('prefix.hex', function(err,prefixi) {
+        Entity.find({'prefix.type.hex': leftpad(req.params.type, 2, 0)}).distinct('prefix.hex').populate('prefix').exec(function(err,prefixi) {
             if (err) throw err;
 
             // object of all the stuff
@@ -87,7 +88,8 @@ router.get('/:type', function(req,res,next) {
 });
 
 router.get('/:type/:prefix', function(req, res, next) {
-    Entity.find({'prefix.hex': req.params.prefix}, function(err,entities) {
+    console.log(leftpad(req.params.prefix, 6, 0));
+    Entity.find({'prefix.hex': leftpad(req.params.prefix, 6, 0)}, function(err,entities) {
         if (err) throw err;
 
         // object of all the stuff
@@ -102,7 +104,7 @@ router.get('/:type/:prefix', function(req, res, next) {
 });
 
 router.get('/:type/:prefix/:eid', function(req, res, next) {
-    Entity.findOne({ 'entity.fullUEID': req.params.type + ":" + req.params.prefix + ":" + req.params.eid},  function(err,entity) {
+    Entity.findOne({ 'entity.fullUEID': leftpad(req.params.type, 2, 0) + ":" + leftpad(req.params.prefix, 6, 0) + ":" + leftpad(req.params.eid,5,0)},  function(err,entity) {
         if (err) throw err;
 
         // object of all the stuff
