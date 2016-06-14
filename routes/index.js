@@ -5,6 +5,9 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express', user: req.user });
 });
+router.get('/about', function(req, res, next) {
+  res.render('about', { title: 'About UEID', user: req.user });
+});
 router.get('/logout', function(req, res, next) {
     // LOGOUT ==============================
         req.logout();
