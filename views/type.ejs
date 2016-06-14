@@ -1,12 +1,22 @@
 <% include partial/head.ejs %>
   <body>
     <% include partial/navbar.ejs %>
+    <nav id="brc-pad1" class="light-blue lighten-2">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="/e/">Categories</a>
+            <a href="/e/<%= type %>" class="breadcrumb"><%= type %></a>
+          </div>
+        </div>
+    </nav>
     <p>
+    <div class="row">
     <% for(var i=0; i<prefixi.length; i++) {%>
-        <a href="/e/<%= type %>/<%= prefixi[i] %> %>"><%= prefixi[i] %></a><br />
+        <div class="col offset-s3 s3"><a href="/e/<%= type %>/<%= prefixi[i].hex %> %>"><%= prefixi[i].hex %></a></div>
+        <div class="col s3"><%= JSON.stringify(prefixi[i]) %></div>
     <%} %>
+    </div>
     </p>
     <%= JSON.stringify(data) %>
     <% include partial/footer.ejs %>
-  </body>
-</html>
+<% include partial/foot.ejs %>
