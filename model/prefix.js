@@ -9,7 +9,10 @@ var prefix = new Schema({
     "hex": String,
     "name": String,
     "description": String,
-    "owner" : ObjectId,
+    "owner" : {
+        type : ObjectId,
+        ref: 'User'
+    },
     "type": {
         "hex": String,
         "decimal": Number

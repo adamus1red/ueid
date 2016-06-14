@@ -83,7 +83,7 @@ router.get('/', function(req, res, next) {
 router.get('/:type', function(req,res,next) {
     Common.findOne({"name": "types"}, function(err, data) {
         if (err) throw err;
-        Prefix.find({"type.hex": leftpad(req.params.type, 2, 0)}, function(err, prefix) {
+        Prefix.find({"type.hex": leftpad(req.params.type, 2, 0)}).populate('owner').exec(function(err, prefix) {
             console.log(data);
             if(prefix.length>0 && prefix != null){
                 res.render('type', { title: 'Type Entity', type: req.params.type, data: data, prefixi: prefix, user: req.user});
@@ -107,7 +107,7 @@ router.get('/:type', function(req,res,next) {
 
 router.get('/:type/:prefix', function(req, res, next) {
     console.log(leftpad(req.params.prefix, 6, 0));
-    Prefix.findOne({'hex': leftpad(req.params.prefix, 6, 0), 'type.hex': leftpad(req.params.type, 2, 0)}, function(err,prefix) {
+    Prefix.findOne({'hex': leftpad(req.params.prefix, 6, 0), 'type.hex': leftpad(req.params.type, 2, 0)}).populate('owner').exec(function(err,prefix) {
         if (err) throw err;
         console.log("prefix ID "+ prefix._id)
         Entity.find({"prefix":prefix._id}).populate('prefix').exec(function (err, entity) {

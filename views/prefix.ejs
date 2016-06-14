@@ -15,6 +15,7 @@
     <div class="col s1"><p>PREFIX: <%= entities[0].prefix.hex %></p></div>
     <div class="col s1"><p>NAME: <%= entities[0].prefix.name %></p></div>
     <div class="col s3"><p>DESCRIPTION: <%= entities[0].prefix.description %></p></div>
+    <div class="col s3"><p>Owner: <a href="/u/<%= prefix.owner.username %>"><%= prefix.owner.username %></a></p></div>
     </div>
     <p>
     <% for(var i = 0; i < entities.length; i++) { %>
@@ -26,5 +27,4 @@
     
     </p>
     <% include partial/footer.ejs %>
-  </body>
-</html>
+<% include partial/foot.ejs %>
