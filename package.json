@@ -17,6 +17,7 @@
     "express-session": "^1.13.0",
     "helmet": "^2.1.1",
     "left-pad": "^1.1.0",
+    "mongodb": "^2.1.18",
     "mongoose": "^4.4.20",
     "morgan": "~1.6.1",
     "mysql": "^2.11.1",

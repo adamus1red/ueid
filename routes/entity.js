@@ -1,27 +1,39 @@
 var express = require('express');
 var leftpad = require('left-pad');
 var router = express.Router();
+var MongoClient = require('mongodb').MongoClient;
 
-var Common = require('../model/common'), Entity = require('../model/entity');
+var Common = require('../model/common'), Entity = require('../model/entity'), Prefix = require('../model/prefix');
 
 router.get('/test_create_entity', function(req,res,next) {
     var rand = Math.floor((Math.random() * 1048575) + 1)
     var test = new Entity({
         "entity": {
-            "decimal": dec2hex(rand),
+            "decimal": rand,
             "hex": hex2dec(rand),
             "fullUEID": "00:000001:" + hex2dec(rand)
-        },
-        "prefix": {
-            "decimal": 1,
-            "owner" :  ObjectID("575de2ce690540882cfc0018"),
-            "hex": "000001",
-            "name": "Test Prefix",
-            "description": "Prefix to be used for the development and testing of UEID systems",
-            "type": {
-                "hex": "00",
-                "decimal": 0
-            }
+        }
+    });
+    test.save(function(err) {
+      if (err) throw err;
+
+      console.log('Entity saved successfully!');
+    });
+    res.send("Test object created");
+    res.end();
+});
+
+router.get('/test_create_prefix', function(req,res,next) {
+    var rand = Math.floor((Math.random() * 16777215) + 1)
+    var test = new Prefix({
+        "decimal": rand,
+        "owner" :  "575f54602f7b00683af231c9",
+        "hex": dec2hex(rand),
+        "name": "Test Prefix",
+        "description": "Prefix to be used for the development and testing of UEID systems",
+        "type": {
+            "hex": "00",
+            "decimal": 0
         }
     });
     test.save(function(err) {
@@ -34,7 +46,6 @@ router.get('/test_create_entity', function(req,res,next) {
 });
 
 router.get('/test_create_common', function(req,res,next) {
-    var rand = Math.floor((Math.random() * 1048575) + 1)
     var test = new Common({
         "name": "types",
         "data": [
@@ -70,41 +81,50 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:type', function(req,res,next) {
-    console.log(req.params.type);
     Common.findOne({"name": "types"}, function(err, data) {
         if (err) throw err;
-        Entity.find({'prefix.type.hex': leftpad(req.params.type, 2, 0)}).distinct('prefix.hex').populate('prefix').exec(function(err,prefixi) {
+        Prefix.find({"type.hex": leftpad(req.params.type, 2, 0)}, function(err, prefix) {
+            console.log(data);
+            if(prefix.length>0 && prefix != null){
+                res.render('type', { title: 'Type Entity', type: req.params.type, data: data, prefixi: prefix, user: req.user});
+            } else {
+                res.status(404).send('Not found');;
+            }
+        });
+        /* Prefix.find({'type.hex': leftpad(req.params.type, 2, 0)}, function(err,prefixi) {
             if (err) throw err;
-
-            // object of all the stuff
+            
             console.log(prefixi);
+            // object of all the stuff
             if(prefixi.length>0 && prefixi != null){
                 res.render('type', { title: 'Type Entity', type: req.params.type, data: data, prefixi: prefixi, user: req.user});
             } else {
                 res.status(404).send('Not found');;
             }
-        });
+        }); */
     });
 });
 
 router.get('/:type/:prefix', function(req, res, next) {
     console.log(leftpad(req.params.prefix, 6, 0));
-    Entity.find({'prefix.hex': leftpad(req.params.prefix, 6, 0)}, function(err,entities) {
+    Prefix.findOne({'hex': leftpad(req.params.prefix, 6, 0), 'type.hex': leftpad(req.params.type, 2, 0)}, function(err,prefix) {
         if (err) throw err;
-
-        // object of all the stuff
-        console.log(entities);
-        if(entities.length>0 && entities != null){
-            res.render('prefix', { title: 'Prefix Entity', type: req.params.type, prefix: req.params.prefix, entities: entities, user: req.user });
-        } else {
-            res.status(404)        // HTTP status 404: NotFound
-   .send('Not found');
-        }
+        console.log("prefix ID "+ prefix._id)
+        Entity.find({"prefix":prefix._id}).populate('prefix').exec(function (err, entity) {
+            if (err) throw err;
+            // object of all the stuff
+            console.log(JSON.stringify(entity));
+            if(typeof entity != "undefined" && entity != null){
+                res.render('prefix', { title: 'Prefix Entity', type: req.params.type, prefix: prefix, entities: entity, user: req.user });
+            } else {
+                res.status(404).send('Not found');
+            }
+        });
     });
 });
 
 router.get('/:type/:prefix/:eid', function(req, res, next) {
-    Entity.findOne({ 'entity.fullUEID': leftpad(req.params.type, 2, 0) + ":" + leftpad(req.params.prefix, 6, 0) + ":" + leftpad(req.params.eid,5,0)},  function(err,entity) {
+    Entity.findOne({ 'entity.fullUEID': leftpad(req.params.type, 2, 0) + ":" + leftpad(req.params.prefix, 6, 0) + ":" + leftpad(req.params.eid,5,0)}).populate('prefix').exec( function(err,entity) {
         if (err) throw err;
 
         // object of all the stuff
@@ -127,6 +147,11 @@ function objsort(a,b) {
     return 1;
   else 
     return 0;
+}
+
+function getPrefixInfo(prefixHex) {
+    var q = Entity.findOne({'prefix.hex': prefixHex});
+    return q;
 }
 
 function hex2dec(number){

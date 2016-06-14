@@ -7,15 +7,8 @@ var ObjectId = Schema.ObjectId;
 var entity = new Schema({
 
     prefix           : {
-        decimal      : Number,
-        hex          : String,
-        type: {
-            hex      : String,
-            decimal  : Number
-        },
-        name         : String,
-        description  : String,
-        owner        : ObjectId
+        type : ObjectId,
+        ref: 'Prefix'
     },
     entity           : {
         decimal      : Number,
