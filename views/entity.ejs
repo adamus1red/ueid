@@ -11,8 +11,10 @@
           </div>
         </div>
     </nav>
-    <p>Full EUID: <%= entity.entity.fullUEID %></p>
-    <p>Decimal ID: <%= parseInt(entity.prefix.type.hex + entity.prefix.hex + entity.entity.hex, 16) %></p>
-    <%= JSON.stringify(entity) %>
+    <div class="container">
+        <p>Full EUID: <%= entity.entity.fullUEID %></p>
+        <p>Decimal ID: <%= parseInt(entity.prefix.type.hex + entity.prefix.hex + entity.entity.hex, 16) %></p>
+        <%= JSON.stringify(entity) %>
+    </div>
     <% include partial/footer.ejs %>
 <% include partial/foot.ejs %>
