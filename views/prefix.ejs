@@ -16,7 +16,7 @@
             <div class="col s1"><p>PREFIX: <%= prefix.hex %></p></div>
             <div class="col s1"><p>NAME: <%= prefix.name %></p></div>
             <div class="col s3"><p>DESCRIPTION: <%= prefix.description %></p></div>
-            <div class="col s3"><p>Owner: <a href="/u/<%= prefix.owner.username %>"><%= prefix.owner.username %></a></p></div>
+            <div class="col s3"><p>Owner: <a href="/u/<% if(typeof prefix.owner.username != "undefined" || prefix.owner.username != null){%><%= prefix.owner.username %><%}%>"><% if(typeof prefix.owner.username != "undefined"){%><%= prefix.owner.username %><%}%></a></p></div>
         </div>
         <p>
         <% if(typeof entities != "undefined") {
