@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
         
         // process the login form
         app.post('/login/', csrfProtection, passport.authenticate('local-login', {
-            successRedirect : '/users', // redirect to the secure profile section
+            successRedirect : '/u', // redirect to the secure profile section
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
@@ -32,7 +32,7 @@ module.exports = function(app, passport) {
 
         // process the signup form
         app.post('/login/signup', csrfProtection, passport.authenticate('local-signup', {
-            successRedirect : '/users', // redirect to the secure profile section
+            successRedirect : '/u', // redirect to the secure profile section
             failureRedirect : '/login/signup', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
