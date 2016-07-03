@@ -1,8 +1,36 @@
 <% include partial/head.ejs %>
     <% include partial/navbar.ejs %>
     <div class="container">
-    <h1><b>U</b>niversal <b>E</b>ntity <b>ID</b>entifier</h1>
-    <p>Welcome to <%= title %></p>
+        <h1><b>U</b>niversal <b>E</b>ntity <b>ID</b>entifier</h1>
+        <p>Welcome to <%= title %></p>
+        <div class="row">
+            <div class="col s12">
+                <div class="card blue accent-2">
+                    <div class="card-content white-text">
+                        <span class="card-title">Latest Entities</span>
+                        <div class="row">
+                            <div class="col s6">
+                                Entity ID
+                            </div>
+                            <div class="col s6">
+                                Date Created
+                            </div>
+                        </div>
+                        <% for(var i = 0; i < entityLatest.length; i++) { %>
+                        <div class="row">
+                            <div class="col s6">
+                                <p><a class="white-text" href="/e/<%= entityLatest[i].prefix.type.hex %>/<%= entityLatest[i].prefix.hex %>/<%= entityLatest[i].entity.hex %>"><%= entityLatest[i].entity.fullUEID %></a></p>
+                            </div>
+                            <div class="col s6">
+                                <p><%= entityLatest[i].created %></p>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <%- JSON.stringify(entityLatest)%> -->
     </div>
     <% include partial/footer.ejs %>
 <% include partial/foot.ejs %>

@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "apicache": "0.0.14",
+    "bbcode": "^0.1.5",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.13.2",
     "connect-flash": "^0.1.1",
@@ -13,6 +15,7 @@
     "csrf": "^3.0.3",
     "csurf": "^1.9.0",
     "debug": "~2.2.0",
+    "dompurify": "^0.8.2",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "express-session": "^1.13.0",
@@ -26,6 +29,7 @@
     "passport-auth0": "^0.5.1",
     "passport-local": "^1.0.0",
     "pmx": "^0.6.2",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "validator": "^5.4.0"
   }
 }

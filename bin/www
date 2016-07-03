@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-var pmx = require('pmx').init({
+/*var pmx = require('pmx').init({
   http          : true, // HTTP routes logging (default: false)
   http_latency  : 200,  // Limit of acceptable latency
   http_code     : 500,  // Error code to track'
@@ -13,7 +13,7 @@ var pmx = require('pmx').init({
   custom_probes : true, // Auto expose JS Loop Latency and HTTP req/s as custom metrics (default: true)
   network       : true, // Network monitoring at the application level (default: false)
   ports         : true  // Shows which ports your app is listening on (default: false)
-});
+});*/
 var app = require('../app');
 var debug = require('debug')('ueid:server');
 var http = require('http');
