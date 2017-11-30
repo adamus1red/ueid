@@ -9,6 +9,7 @@ var prefix = new Schema({
     "hex": String,
     "name": String,
     "description": String,
+    "created" : { type: Date, default: Date.now },
     "owner" : {
         type : ObjectId,
         ref: 'User'

@@ -3,8 +3,8 @@
             <% if (typeof user != "undefined") {%>
                 <!-- Dropdown Structure -->
                 <ul id="userdropdown" class="dropdown-content">
-                    <li><a href="/users"><%= user.username %></a></li>
-                    <li><a href="#!">dash</a></li>
+                    <li><a href="/u"><%= user.username %></a></li>
+                    <li><a href="/u/dashboard">dash</a></li>
                     <li class="divider"></li>
                     <li><a href="/logout">Logout</a></li>
                 </ul>
@@ -13,8 +13,6 @@
                 <ul id="userdropdown" class="dropdown-content">
                     <li><a href="/login">Login</a></li>
                     <li><a href="/login/signup">Signup</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#!">three</a></li>
                 </ul>
             <% } %>
                 <nav class="light-blue lighten-1">

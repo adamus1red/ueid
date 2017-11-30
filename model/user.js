@@ -23,7 +23,8 @@ var userSchema = mongoose.Schema({
     },
     permissions : {
         fullAdmin    : Boolean
-    }
+    },
+    "created" : { type: Date, default: Date.now },
 });
 
 

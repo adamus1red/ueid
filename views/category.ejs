@@ -8,14 +8,15 @@
           </div>
         </div>
     </nav>
-    <p></p>
+    <div class="container">
     <% for(var i = 0; i < data.length; i++) { %>
     <div class="row">
-        <div class="col offset-s3 s3"><a href="/e/<%= data[i].id %>"><%= data[i].name %></a></div>
+        <div class="col s3"><a href="/e/<%= data[i].id %>"><%= data[i].name %></a></div>
         <div class="col s3"><%= data[i].description %></div>
         <div class="col s3"><%=JSON.stringify(data[i])%></div>
     </div>
     <% } %>
+    </div>
     <% include partial/footer.ejs %>
   </body>
 </html>

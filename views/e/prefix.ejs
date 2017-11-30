@@ -1,0 +1,46 @@
+<% include ../partial/head.ejs %>
+    <% include ../partial/navbar.ejs %>
+    <div class="container">
+        <h2>Prefix Request</h2>
+        <% if (e.length > 0) { %>
+            <div class="row">
+                <div class="col offset-m3 s12 m6">
+                    <div class="card-panel red">
+                        <span class="flow-text white-text">
+                        <% for(var i = 0; i < e.length; i++) {
+                            if (e[i] === "d") { %>
+                                <p>Description missing</p>
+                            <%  } else if(e[i] === "t") { %>
+                                <p>Type missing</p>
+                            <% }
+                        }%>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+        <form action="/e/admin/prefix" method="post">
+            <div class="row">
+                <label>Select Category</label>
+                <select name="ptype" class="browser-default">
+                    <option value="" disabled selected>Choose your option</option>
+                <% for(var i =0; i < types.length; i++) { %>
+                    <option value="<%= types[i].id %>"><%= types[i].name %></option>    
+                <% } %>
+                </select>
+            </div>
+             <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="editor" name="description" class="materialize-textarea"></textarea>
+                    <label for="editor">Enter description. <small>BBCode Enabled</small></label>
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+    <p><%= JSON.stringify(types) %></p>
+    <% include ../partial/footer.ejs %>
+
+<% include ../partial/foot.ejs %>

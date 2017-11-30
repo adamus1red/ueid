@@ -5,26 +5,28 @@
         <div class="nav-wrapper">
           <div class="col s12">
             <a href="/e/">Categories</a>
-            <a href="/e/<%= entities[0].prefix.type.hex %>" class="breadcrumb"><%= entities[0].prefix.type.hex %></a>
-            <a href="/e/<%= entities[0].prefix.type.hex %>/<%= entities[0].prefix.hex %>" class="breadcrumb"><%= entities[0].prefix.hex %></a>
+            <a href="/e/<%= prefix.type.hex %>" class="breadcrumb"><%= prefix.type.hex %></a>
+            <a href="/e/<%= prefix.type.hex %>/<%= prefix.hex %>" class="breadcrumb"><%= prefix.hex %></a>
           </div>
         </div>
     </nav>
-    <div class="row">
-    <div class="col offset-s1 s1"><p>TYPE: <%= entities[0].prefix.type.hex %></div>
-    <div class="col s1"><p>PREFIX: <%= entities[0].prefix.hex %></p></div>
-    <div class="col s1"><p>NAME: <%= entities[0].prefix.name %></p></div>
-    <div class="col s3"><p>DESCRIPTION: <%= entities[0].prefix.description %></p></div>
-    <div class="col s3"><p>Owner: <a href="/u/<%= prefix.owner.username %>"><%= prefix.owner.username %></a></p></div>
-    </div>
-    <p>
-    <% for(var i = 0; i < entities.length; i++) { %>
+    <div class="container">
         <div class="row">
-            <div class="col offset-s3 s3"><a href="/e/<%= entities[i].prefix.type.hex %>/<%= entities[i].prefix.hex %>/<%= entities[i].entity.hex %>"><%= entities[i].entity.fullUEID%></a></div>
-            <div class="col s3"><%=JSON.stringify(entities[i])%></div>
+            <div class="col offset-s1 s1"><p>TYPE: <%= prefix.type.hex %></div>
+            <div class="col s1"><p>PREFIX: <%= prefix.hex %></p></div>
+            <div class="col s1"><p>NAME: <%= prefix.name %></p></div>
+            <div class="col s3"><p>DESCRIPTION: <%= prefix.description %></p></div>
+            <div class="col s3"><p>Owner: <a href="/u/<% if(typeof prefix.owner.username != "undefined" || prefix.owner.username != null){%><%= prefix.owner.username %><%}%>"><% if(typeof prefix.owner.username != "undefined"){%><%= prefix.owner.username %><%}%></a></p></div>
         </div>
-    <% } %>
-    
-    </p>
+        <p>
+        <% if(typeof entities != "undefined") {
+            for(var i = 0; i < entities.length; i++) { %>
+            <div class="row">
+                <div class="col s3"><a href="/e/<%= entities[i].prefix.type.hex %>/<%= entities[i].prefix.hex %>/<%= entities[i].entity.hex %>"><%= entities[i].entity.fullUEID%></a></div>
+                <div class="col s3"><%=JSON.stringify(entities[i])%></div>
+            </div>
+        <% } } %>
+        </p>
+    </div>
     <% include partial/footer.ejs %>
 <% include partial/foot.ejs %>

@@ -1,5 +1,4 @@
 <% include partial/head.ejs %>
-  <body>
     <% include partial/navbar.ejs %>
     <nav id="brc-pad1" class="light-blue lighten-2">
         <div class="nav-wrapper">
@@ -9,14 +8,14 @@
           </div>
         </div>
     </nav>
-    <p>
-    <div class="row">
-    <% for(var i=0; i<prefixi.length; i++) {%>
-        <div class="col offset-s3 s3"><a href="/e/<%= type %>/<%= prefixi[i].hex %> %>"><%= prefixi[i].hex %></a></div>
-        <div class="col s3"><%= JSON.stringify(prefixi[i]) %></div>
-    <%} %>
+    <div class="container">
+        <% for(var i=0; i<prefixi.length; i++) {%>
+        <div class="row">
+            <div class="col s3"><a href="/e/<%= type %>/<%= prefixi[i].hex %> %>"><%= prefixi[i].hex %></a></div>
+            <div class="col s3"><%= JSON.stringify(prefixi[i]) %></div>
+        </div>
+        <%} %>
     </div>
-    </p>
     <%= JSON.stringify(data) %>
     <% include partial/footer.ejs %>
 <% include partial/foot.ejs %>

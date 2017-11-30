@@ -1,0 +1,30 @@
+<% include ../partial/head.ejs %>
+    <% include ../partial/navbar.ejs %>
+    <div class="container">
+        <% if(t === "prefix") { %>
+        <div class="row">
+            <div class="col offset-m3 s12 m6">
+                <div class="card-panel green lighen-1">
+                    <span class="flow-text white-text">
+                        Prefix assigned
+                    </span>
+                </div>
+            </div>
+        </div>
+        <% } elseif(t==="entity") {%>
+        <div class="row">
+            <div class="col offset-m3 s12 m6">
+                <div class="card-panel green lighen-1">
+                    <span class="flow-text white-text">
+                        Entity created
+                    </span>
+                </div>
+            </div>
+        </div>
+        <% }
+        %>
+    </div>
+    <p><%= JSON.stringify(types) %></p>
+    <% include ../partial/footer.ejs %>
+
+<% include ../partial/foot.ejs %>

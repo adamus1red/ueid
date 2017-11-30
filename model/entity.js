@@ -10,6 +10,7 @@ var entity = new Schema({
         type : ObjectId,
         ref: 'Prefix'
     },
+    "created" : { type: Date, default: Date.now },
     entity           : {
         decimal      : Number,
         hex          : String,

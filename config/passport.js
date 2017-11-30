@@ -1,6 +1,6 @@
 var Auth0Strategy = require('passport-auth0').Strategy;
 var LocalStrategy    = require('passport-local').Strategy;
-
+var validator = require('validator');
 var config = require('./config');
 
 var User       = require('../model/user');
@@ -23,27 +23,30 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
     function(req, email, password, done) {
-        if (email)
+        if (email && validator.isEmail(email)) {//=> true )
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
-        // asynchronous
-        process.nextTick(function() {
-            User.findOne({ 'local.email' :  email }, function(err, user) {
-                // if there are any errors, return the error
-                if (err)
-                    return done(err);
+            // asynchronous
+            process.nextTick(function() {
+                User.findOne({ 'local.email' :  email }, function(err, user) {
+                    // if there are any errors, return the error
+                    if (err)
+                        return done(err);
+                    console.log(req);
+                    // if no user is found, return the message
+                    if (!user)
+                        return done(null, false, req.flash('loginMessage', 'No user found.'));
 
-                // if no user is found, return the message
-                if (!user)
-                    return done(null, false, req.flash('loginMessage', 'No user found.'));
-
-                if (!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-
-                // all is well, return user
-                else
-                    return done(null, user);
+                    if (!user.validPassword(password))
+                        return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+                    // all is well, return user
+                    else
+                        return done(null, user);
+                });
             });
-        });
+        } else {
+            return done(null, false, req.flash('loginMessage', 'No user found.'));
+        }
+        
     }));
     // =========================================================================
     // LOCAL SIGNUP ============================================================
@@ -61,7 +64,7 @@ module.exports = function(passport) {
         process.nextTick(function() {
             // if the user is not already logged in:
             if (!req.user) {
-                User.findOne({ 'local.email' :  email }, function(err, user) {
+                User.findOne({ $or: [{'local.email' :  email.toLowerCase()}, {'username': req.body.username}] }, function(err, user) {
                     // if there are any errors, return the error
                     if (err)
                         return done(err);
@@ -72,6 +75,7 @@ module.exports = function(passport) {
                         // create the user
                         var newUser            = new User();
                         newUser.local.email    = email;
+                        newUser.username       = req.body.username;
                         newUser.local.password = newUser.generateHash(password);
 
                         newUser.save(function(err) {
@@ -95,6 +99,7 @@ module.exports = function(passport) {
                     } else {
                         var user = req.user;
                         user.local.email = email;
+                        user.username    = req.body.username;
                         user.local.password = user.generateHash(password);
                         user.save(function (err) {
                             if (err)
