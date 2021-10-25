@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "apicache": "1.6.2",
+    "apicache": "1.6.3",
     "bbcode": "0.1.5",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.19.0",
