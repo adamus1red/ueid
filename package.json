@@ -25,7 +25,7 @@
     "mongoose": "7.6.6",
     "morgan": "1.10.0",
     "mysql": "2.18.1",
-    "passport": "0.6.0",
+    "passport": "0.7.0",
     "passport-auth0": "1.4.4",
     "passport-local": "1.0.0",
     "pmx": "1.6.7",
